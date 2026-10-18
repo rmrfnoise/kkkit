@@ -1,0 +1,37 @@
+/* ==========================================================================
+   Element Plus 主题变量覆盖
+   --------------------------------------------------------------------------
+   必须在 element-plus/dist/index.css 之后导入（见 main.js），
+   否则同为 :root 级别时会被 EP 自带变量覆盖。
+
+   统一后全站控件（按钮 / 输入框 / 日期面板 / 卡片等）自动跟随主色，
+   无需逐页改样式。仅覆盖主题色与文字/边框色，不动组件结构与尺寸。
+   ========================================================================== */
+
+:root {
+    --el-color-primary: var(--primary);
+    --el-color-primary-light-3: #4A9C83;
+    --el-color-primary-light-5: #74B99E;
+    --el-color-primary-light-7: #A7D5C2;
+    --el-color-primary-light-8: #C2E3D4;
+    --el-color-primary-light-9: var(--primary-bg);
+    --el-color-primary-dark-2: #03603F;
+
+    --el-color-success: var(--success);
+    --el-color-warning: var(--warning);
+    --el-color-danger: var(--danger);
+    --el-color-error: var(--danger);
+
+    --el-text-color-primary: var(--text);
+    --el-text-color-regular: var(--text);
+    --el-text-color-secondary: var(--text-weak);
+    --el-text-color-placeholder: var(--text-faint);
+
+    --el-border-color: var(--border);
+    --el-border-color-light: var(--border);
+    --el-border-color-lighter: var(--border);
+    --el-border-radius-base: var(--radius);
+
+    --el-fill-color-blank: var(--panel);
+    --el-bg-color: var(--panel);
+}

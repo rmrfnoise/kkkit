@@ -1,0 +1,125 @@
+@import 'normalize.css';
+
+@font-face {
+    font-family: AlimamaShuHeiTi;
+    font-weight: 700;
+    src: url("../fonts/AlimamaShuHeiTi-Bold.woff2") format("woff2");
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: HONORSansCN;
+    font-weight: 400;
+    src: url("../fonts/HONORSansCN-Regular.woff") format("woff");
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ==========================================================================
+   设计 token
+   --------------------------------------------------------------------------
+   全站唯一的视觉来源。换配色只需改这里的变量，不要在各组件里写死色值。
+   配色主题：亮色终端绿（终端的 light theme，黑客感来自等宽字体与终端符号，
+   而非黑底。浅底 + 低饱和绿，长时盯屏不累眼，对比度优于纯黑底高饱和绿。）
+   ========================================================================== */
+
+:root {
+    /* --- 中性色阶 --- */
+    --bg: #F6F8F9;
+    --panel: #FFFFFF;
+    --border: #DFE4E8;
+    --border-strong: #C9D1D8;
+
+    --text: #16191D;
+    --text-weak: #6B7280;
+    --text-faint: #9CA3AF;
+
+    /* --- 主色：终端绿 --- */
+    --primary: #047857;
+    --primary-hover: #065F46;
+    --primary-active: #044E38;
+
+    /* 主色衍生，用于淡底、轻边框、hover 背景 */
+    --primary-bg: #ECFDF5;
+    --primary-bg-strong: #D1FAE5;
+    --primary-border: #A7D5C2;
+
+    /* --- 辅助色：青 --- */
+    --accent: #0E7490;
+    --accent-bg: #ECFEFF;
+
+    /* --- 状态色 --- */
+    /* success 比 primary 亮一档，避免两者同色 */
+    --success: #16A34A;
+    --warning: #B45309;
+    --danger: #B91C1C;
+
+    /* --- 字体 --- */
+    --font-sans: AlimamaShuHeiTi, HONORSansCN, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+
+    /* --- 圆角：终端感要硬，不要大圆角 --- */
+    --radius-sm: 2px;
+    --radius: 4px;
+    --radius-lg: 6px;
+
+    /* --- 阴影：三级 --- */
+    --shadow-1: 0 1px 2px rgba(16, 24, 40, 0.06);
+    --shadow-2: 0 4px 12px rgba(16, 24, 40, 0.08);
+    --shadow-3: 0 8px 24px rgba(16, 24, 40, 0.12);
+
+    /* --- 间距刻度（1rem = 10px） --- */
+    --space-1: 0.4rem;
+    --space-2: 0.8rem;
+    --space-3: 1.2rem;
+    --space-4: 1.6rem;
+    --space-5: 2.4rem;
+    --space-6: 3.2rem;
+    --space-7: 4rem;
+    --space-8: 4.8rem;
+
+    /* --- 过渡 --- */
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --duration: 0.18s;
+
+    /* --- 布局 --- */
+    --page-padding: 12vw;
+    --header-height: 7rem;
+}
+
+/* Element Plus 主题变量覆盖见 element-theme.css：
+   它必须晚于 element-plus/dist/index.css 导入，不能合并进本文件。 */
+
+html {
+    box-sizing: border-box;
+    font-size: 10px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font: 1.6rem var(--font-sans);
+    color: var(--text);
+    background-color: var(--bg);
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+    -webkit-tap-highlight-color: transparent;
+    /*noinspection CssUnknownProperty*/
+    tap-highlight-color: transparent;
+}
+
+h2 {
+    margin: 0;
+}
+
+/* 键盘焦点统一视觉：终端绿描边。鼠标点击不触发（:focus-visible） */
+:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}
