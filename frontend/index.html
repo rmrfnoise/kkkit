@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- GitHub Pages SPA 深链回退：404.html 会把 /kkkit/xxx 转成 /kkkit/?/xxx 跳回本页，
+         这里在 Vue 挂载前用 replaceState 还原真实路径（MIT，rafgraph/spa-github-pages） -->
+    <script>
+        (function (l) {
+            if (l.search[1] === '/') {
+                var decoded = l.search.slice(1).split('&').map(function (s) {
+                    return s.replace(/~and~/g, '&')
+                }).join('?')
+                window.history.replaceState(null, null,
+                    l.pathname.slice(0, -1) + decoded + l.hash)
+            }
+        }(window.location))
+    </script>
+    <link rel="icon" href="/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#FFFFFF">
+    <meta name="description"
+          content="咔咔工具箱：12 个即开即用的在线小工具 —— Base64、URL、Unicode、HEX/RGB、时间戳、身份证解析、二维码、微信对话与朋友圈生成器。无需注册，没有广告。">
+    <title>咔咔工具箱 - 在线工具平台，让工作更简单</title>
+</head>
+<body>
+<div id="app"></div>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

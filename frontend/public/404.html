@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>咔咔工具箱</title>
+    <!-- GitHub Pages SPA 深链回退（MIT，rafgraph/spa-github-pages）：
+         项目站部署在 /kkkit/ 子路径下，保留前 1 段路径，其余转成 ?/path 跳回首页，
+         由 index.html 的同款脚本还原地址后交给 vue-router 匹配。
+         本文件放在 public/ 下，构建时原样拷贝到 dist/404.html。 -->
+    <script>
+        var pathSegmentsToKeep = 1
+        var l = window.location
+        l.replace(
+            l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+            l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+            l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+            (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+            l.hash
+        )
+    </script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,338 @@
+@import 'normalize.css';
+
+/* 霞鹜文楷（SIL OFL）。按 unicode-range 切成 46 片，浏览器只下载当前页面用到的几片，
+   首屏通常 150–300KB；整包 2.3MB 留在仓库里，不依赖任何字体 CDN。 */
+@import url("../fonts/lxgw-wenkai/lxgw-wenkai.css");
+
+@font-face {
+    font-family: AlimamaShuHeiTi;
+    font-weight: 700;
+    src: url("../fonts/AlimamaShuHeiTi-Bold.woff2") format("woff2");
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ==========================================================================
+   设计 token
+   --------------------------------------------------------------------------
+   全站唯一的视觉来源。换配色只需改这里的变量，不要在各组件里写死色值。
+
+   世界：亮色终端。纸感浅底 + 细规则线 + 等宽字体的数据感；
+   黑客感来自等宽字体与终端符号，不是黑底高饱和绿。
+   长时盯屏不累眼，对比度也优于纯黑底。
+   ========================================================================== */
+
+:root {
+    /* --- 中性色阶 --- */
+    --bg: #F5F7F8;
+    --panel: #FFFFFF;
+    --panel-soft: #FAFBFC;
+    --rule: #E3E7EB;
+    --rule-strong: #C8D0D7;
+
+    /* 文字三级。每一级都在 --bg 上达到 4.5:1 以上：
+       --text-weak 约 7:1，--text-faint 约 4.8:1 */
+    --text: #14181C;
+    --text-weak: #4B535E;
+    --text-faint: #6A7381;
+
+    /* --- 主色：终端绿 --- */
+    --primary: #047857;
+    --primary-hover: #065F46;
+    --primary-active: #044E38;
+
+    /* 主色衍生，用于淡底、轻边框、hover 背景 */
+    --primary-bg: #ECFDF5;
+    --primary-bg-strong: #D3F2E4;
+    --primary-border: #A7D5C2;
+
+    /* --- 辅助色：青 --- */
+    --accent: #0E7490;
+    --accent-bg: #ECFEFF;
+
+    /* --- 状态色 --- */
+    --success: #15803D;
+    --warning: #A16207;
+    --danger: #B91C1C;
+
+    /* --- 字体 ---
+       正文用霞鹜文楷：楷体骨架 + 现代比例，落在网格纸背景上有书卷气；
+       标题用阿里妈妈数黑体（唯一自托管字重），只出现在 display 尺寸；
+       等宽只服务数据、命令与度量，中文回退到正文，不做装饰。 */
+    --font-sans: "LXGW WenKai", "PingFang SC", "HarmonyOS Sans SC", "MiSans",
+    "Source Han Sans SC", "Noto Sans CJK SC", "Microsoft YaHei", system-ui,
+    -apple-system, "Segoe UI", sans-serif;
+    --font-display: AlimamaShuHeiTi, "LXGW WenKai", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Menlo,
+    Consolas, "Liberation Mono", "LXGW WenKai", monospace;
+
+    /* 微信模拟器里要"像微信"，用的是微信自己的系统黑体，不是站点字体 */
+    --font-sim: "PingFang SC", "HarmonyOS Sans SC", "MiSans", "Microsoft YaHei",
+    system-ui, -apple-system, sans-serif;
+
+    /* --- 圆角：终端感要硬，不要大圆角 --- */
+    --radius-sm: 2px;
+    --radius: 4px;
+    --radius-lg: 6px;
+
+    /* --- 阴影：两级 + 键盘焦点环 --- */
+    --shadow-1: 0 1px 2px rgba(16, 24, 40, 0.05);
+    --shadow-2: 0 6px 16px -4px rgba(16, 24, 40, 0.10), 0 2px 4px rgba(16, 24, 40, 0.04);
+    --shadow-3: 0 16px 40px -12px rgba(16, 24, 40, 0.18), 0 4px 10px rgba(16, 24, 40, 0.06);
+    --focus-ring: 0 0 0 2px var(--panel), 0 0 0 4px var(--primary);
+
+    /* --- 间距刻度（1rem = 10px） --- */
+    --space-1: 0.4rem;
+    --space-2: 0.8rem;
+    --space-3: 1.2rem;
+    --space-4: 1.6rem;
+    --space-5: 2.4rem;
+    --space-6: 3.2rem;
+    --space-7: 4.0rem;
+    --space-8: 4.8rem;
+    --space-9: 6.4rem;
+    --space-10: 8.0rem;
+
+    /* --- 过渡 --- */
+    --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --duration: 0.18s;
+
+    /* --- 布局 --- */
+    --container: 112rem;
+    --container-narrow: 88rem;
+    --container-wide: 128rem;
+    --gutter: 3.2rem;
+    --header-height: 6.4rem;
+}
+
+/* Element Plus 主题变量覆盖见 element-theme.css：
+   它必须晚于 element-plus/dist/index.css 导入，不能合并进本文件。 */
+
+/* 62.5% 而不是 10px：用户调大浏览器默认字号时，整站按比例跟着放大 */
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font: 1.6rem/1.7 var(--font-sans);
+    color: var(--text);
+    background-color: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+    -webkit-tap-highlight-color: transparent;
+    /*noinspection CssUnknownProperty*/
+    tap-highlight-color: transparent;
+}
+
+h1, h2, h3, h4 {
+    margin: 0;
+    font-weight: 400;
+    text-wrap: balance;
+}
+
+p {
+    margin: 0;
+    /* 避免中文段落在行尾留下单个字，霞鹜文楷的行长变化更明显 */
+    text-wrap: pretty;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    text-underline-offset: 0.3em;
+    text-decoration-color: var(--rule-strong);
+}
+
+a:hover {
+    text-decoration-color: currentColor;
+}
+
+img, svg {
+    max-width: 100%;
+}
+
+/* 锚点跳转要避开吸顶页头 */
+[id] {
+    scroll-margin-top: calc(var(--header-height) + var(--space-5));
+}
+
+/* 键盘焦点统一视觉：终端绿描边。鼠标点击不触发（:focus-visible） */
+:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}
+
+/* --- 浏览器自带的表面也属于设计：选中色、滚动条、表单光标 --- */
+::selection {
+    background-color: var(--primary-bg-strong);
+    color: var(--text);
+}
+
+input,
+textarea {
+    caret-color: var(--primary);
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--rule-strong) transparent;
+}
+
+::-webkit-scrollbar {
+    width: 1rem;
+    height: 1rem;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--rule-strong);
+    border: 0.3rem solid var(--bg);
+    border-radius: 1rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--text-faint);
+}
+
+/* ==========================================================================
+   全站共用的小构件
+   ========================================================================== */
+
+.container {
+    width: 100%;
+    max-width: var(--container);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+}
+
+.container--wide {
+    max-width: var(--container-wide);
+}
+
+.container--narrow {
+    max-width: var(--container-narrow);
+}
+
+/* 等宽字体只用于数据、命令、度量 */
+.mono {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
+}
+
+/* 面板：白纸 + 细规则线，不做卡片阴影堆叠 */
+.panel {
+    background-color: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+}
+
+.panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: 5.2rem;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--rule);
+}
+
+.panel-title {
+    font-family: var(--font-mono);
+    font-size: 1.2rem;
+    letter-spacing: 0.14em;
+    color: var(--text-faint);
+}
+
+.panel-body {
+    padding: 2.4rem;
+}
+
+/* 图标按钮：复制、清空这类只需要一个符号的操作 */
+.icon-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 3.2rem;
+    height: 3.2rem;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-faint);
+    cursor: pointer;
+    transition: color var(--duration) var(--ease),
+    background-color var(--duration) var(--ease),
+    border-color var(--duration) var(--ease);
+}
+
+.icon-btn:hover {
+    color: var(--primary);
+    background-color: var(--primary-bg);
+    border-color: var(--primary-border);
+}
+
+.icon-btn:active {
+    transform: translateY(1px);
+}
+
+.icon-btn .el-icon {
+    font-size: 1.6rem;
+}
+
+/* 只给读屏软件的文本 */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* 页面级动效：一次克制的内容入场，不是每块各来一遍 */
+.page-enter-active,
+.page-leave-active {
+    transition: opacity 0.16s var(--ease), transform 0.16s var(--ease);
+}
+
+.page-enter-from {
+    opacity: 0;
+    transform: translateY(0.6rem);
+}
+
+.page-leave-to {
+    opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --gutter: 2rem;
+        --header-height: 5.6rem;
+    }
+}

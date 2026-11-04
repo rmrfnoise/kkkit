@@ -1,0 +1,151 @@
+/* ==========================================================================
+   Element Plus 主题变量覆盖
+   --------------------------------------------------------------------------
+   必须在 element-plus/dist/index.css 之后导入（见 main.js），
+   否则同为 :root 级别时会被 EP 自带变量覆盖。
+
+   目标：让 EP 控件看起来像这套设计语言长出来的，而不是默认皮肤。
+   只改主题、尺寸、描边与字重，不改组件结构。
+   ========================================================================== */
+
+:root {
+    /* --- 主色 --- */
+    --el-color-primary: var(--primary);
+    --el-color-primary-light-3: #3F9679;
+    --el-color-primary-light-5: #74B99E;
+    --el-color-primary-light-7: #A7D5C2;
+    --el-color-primary-light-8: #C2E3D4;
+    --el-color-primary-light-9: var(--primary-bg);
+    --el-color-primary-dark-2: #03603F;
+
+    --el-color-success: var(--success);
+    --el-color-warning: var(--warning);
+    --el-color-danger: var(--danger);
+    --el-color-error: var(--danger);
+
+    /* --- 字体与字号 --- */
+    --el-font-family: var(--font-sans);
+    --el-font-size-base: 1.5rem;
+    --el-font-size-small: 1.3rem;
+    --el-font-size-large: 1.7rem;
+
+    /* --- 控件尺寸：默认 40px 高，触屏也够点 --- */
+    --el-component-size: 4rem;
+    --el-component-size-large: 4.4rem;
+    --el-component-size-small: 3.2rem;
+
+    /* --- 文字 --- */
+    --el-text-color-primary: var(--text);
+    --el-text-color-regular: var(--text);
+    --el-text-color-secondary: var(--text-weak);
+    --el-text-color-placeholder: var(--text-faint);
+
+    /* --- 描边 / 填充 --- */
+    --el-border-color: var(--rule);
+    --el-border-color-light: var(--rule);
+    --el-border-color-lighter: var(--rule);
+    --el-border-color-extra-light: var(--rule);
+    --el-border-color-hover: var(--rule-strong);
+    --el-border-radius-base: var(--radius);
+    --el-border-radius-small: var(--radius-sm);
+
+    --el-fill-color-blank: var(--panel);
+    --el-fill-color-light: #F3F5F7;
+    --el-fill-color-lighter: #F7F9FA;
+    --el-bg-color: var(--panel);
+    --el-bg-color-page: var(--bg);
+    --el-bg-color-overlay: var(--panel);
+
+    --el-box-shadow-light: var(--shadow-2);
+    --el-mask-color: rgba(245, 247, 248, 0.86);
+
+    --el-slider-main-bg-color: var(--primary);
+}
+
+/* --- 按钮：字重与主色状态，避免默认的粗圆观感 --- */
+.el-button {
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+.el-button--primary {
+    --el-button-hover-bg-color: var(--primary-hover);
+    --el-button-hover-border-color: var(--primary-hover);
+    --el-button-active-bg-color: var(--primary-active);
+    --el-button-active-border-color: var(--primary-active);
+}
+
+/* --- 输入框：1px 硬描边，聚焦时主色 + 一圈极淡光晕 --- */
+.el-input__wrapper,
+.el-select__wrapper {
+    box-shadow: 0 0 0 1px var(--rule) inset;
+}
+
+.el-input__wrapper:hover,
+.el-select__wrapper:hover {
+    box-shadow: 0 0 0 1px var(--rule-strong) inset;
+}
+
+.el-input__wrapper.is-focus,
+.el-select__wrapper.is-focused {
+    box-shadow: 0 0 0 1px var(--primary) inset, 0 0 0 3px rgba(4, 120, 87, 0.10);
+}
+
+.el-textarea__inner {
+    padding: 1.2rem 1.4rem;
+    line-height: 1.7;
+    box-shadow: 0 0 0 1px var(--rule) inset;
+}
+
+.el-textarea__inner:hover {
+    box-shadow: 0 0 0 1px var(--rule-strong) inset;
+}
+
+.el-textarea__inner:focus {
+    box-shadow: 0 0 0 1px var(--primary) inset, 0 0 0 3px rgba(4, 120, 87, 0.10);
+}
+
+/* 只读结果框：保持正文可读，不要用禁用态的灰字 */
+.el-textarea.is-readonly .el-textarea__inner {
+    background-color: var(--panel-soft);
+    color: var(--text);
+}
+
+/* --- 卡片、折叠面板、标签：统一成纸面板，不叠阴影 --- */
+.el-card {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    box-shadow: none;
+}
+
+.el-collapse {
+    border-color: var(--rule);
+}
+
+.el-collapse-item__header {
+    padding-inline: 2rem;
+    font-size: 1.5rem;
+    color: var(--text);
+}
+
+.el-collapse-item__content {
+    padding-inline: 2rem;
+    padding-bottom: 1.8rem;
+}
+
+.el-tabs__item {
+    font-size: 1.5rem;
+}
+
+.el-tabs__active-bar {
+    height: 2px;
+    background-color: var(--primary);
+}
+
+.el-tag {
+    border-radius: var(--radius-sm);
+}
+
+.el-divider {
+    border-color: var(--rule);
+}
